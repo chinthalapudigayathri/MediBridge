@@ -16,6 +16,9 @@ CORS helps communication from backend to frontend easily
 */
 const cors = require('cors');
 
+//Adding router
+const patientRoutes = require('./route/patientroute');
+
 /* We are creating an express application object
 app object here on means backend server
 it is used to start server, define API, configure middleware
@@ -34,44 +37,8 @@ mongoose.connect('mongodb://localhost:27017/healthcare')
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error(err));
 
-// Patient Schema
-const patientSchema = new mongoose.Schema({
-  name: String,
-  age: Number,
-  gender: String,
-  medicalHistory: [String],
-  appointments: [{
-    date: Date,
-    doctor: String,
-    notes: String
-  }]
-});
 
-const Patient = mongoose.model('Patient', patientSchema);
-
-// API Endpoints
-app.post('/patients', async (req, res) => {
-  const patient = new Patient(req.body);
-  await patient.save();
-  res.json(patient);
-});
-
-app.get('/patients', async (req, res) => {
-  const patients = await Patient.find();
-  res.json(patients);
-});
-
-
-app.put('/patients/:id', async (req, res) => {
-  const updatedPatient = await Patient.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  res.json(updatedPatient);
-});
-
-
-app.delete('/patients/:id', async (req, res) => {
-  await Patient.findByIdAndDelete(req.params.id);
-  res.json({ message: 'Patient deleted successfully' });
-});
-
+// Use patient routes
+app.use('/patients', patientRoutes);
 
 app.listen(5000, () => console.log('Server running on port 5000'));
