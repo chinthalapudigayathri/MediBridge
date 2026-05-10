@@ -1,0 +1,3 @@
+name,age,gender,medicalHistory,appointments
+Alice,30,Female,"Asthma","2026-05-15|Dr. Rao|Routine checkup"
+Bob,45,Male,"Diabetes",""
