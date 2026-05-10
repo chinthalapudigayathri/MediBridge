@@ -1,4 +1,4 @@
-//import node.js fuilt in fs module
+//import node.js built in fs module
 const fs = require('fs');
 
 //import mongodb
